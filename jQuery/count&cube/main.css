@@ -1,0 +1,23 @@
+.wrapper__count{
+    display: flex;
+}
+.wrapper__count div {
+    margin-right: 50px;
+    border: 1px solid;
+    width: 100px;
+    height: 100px;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cubeColors{ 
+    width: 50px;
+    height: 50px;
+    border: 1px solid #333333;
+    margin: 20px;
+    background-color: #fff;
+}
+.wrapper {
+    display: flex;
+}

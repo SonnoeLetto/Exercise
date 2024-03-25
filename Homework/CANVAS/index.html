@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid purple;
+      }
+    </style>
+  </head>
+  <body id="body">
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <script src="three.js"></script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      let circle = function (x, y, radius, fillCircle) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+        if (fillCircle) {
+          ctx.fill();
+        } else {
+          ctx.stroke();
+        }
+      };
+      let drawSnowman = function (x, y) {
+        ctx.fillStyle = "Black";
+
+        circle(x + 80, y + 110, 40, false);
+        circle(x + 80, y + 40, 30, false);
+        circle(x + 70, y + 35, 5, true);
+        circle(x + 90, y + 35, 5, true);
+
+        circle(x + 80, y + 90, 5, true);
+        circle(x + 80, y + 110, 5, true);
+        circle(x + 80, y + 130, 5, true);
+
+        ctx.fillStyle = "red";
+        circle(x + 80, y + 50, 5, true);
+      };
+      drawSnowman(0, 0);
+
+      // ===================================================//
+      const scene = new THREE.Scene();
+
+      const fov = 70;
+      const aspectRatio = window.innerWidth / window.innerHeight;
+      const near = 0.1;
+      const far = 1000;
+
+      const camera = new THREE.PerspectiveCamera(fov, aspectRatio, near, far);
+
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor("#ccc");
+
+      document.body.append(renderer.domElement);
+
+      const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+      const material = new THREE.MeshPhongMaterial({ color: "#830081" });
+      const torus = new THREE.Mesh(geometry, material);
+      scene.add(torus);
+
+      torus.scale.set(10, 10, 10, 10);
+      torus.rotation.y = 15;
+      camera.position.z = 500;
+
+      const light = new THREE.DirectionalLight('#fff', 0.7);
+      scene.add(light);
+      light.position.set(-1, 2, 4)
+      // renderer.render(scene, camera);
+
+      function animate() {
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+
+        torus.rotation.z += 0.01;
+        torus.rotation.y += 0.01;
+        torus.rotation.x += 0.01;
+      }
+      animate();
+    </script>
+  </body>
+</html>
